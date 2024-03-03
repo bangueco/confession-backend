@@ -12,14 +12,14 @@ confessionsRouter.get('/:id', (request, response, next) => {
   .catch(error => next(error))
 })
 
-confessionsRouter.post('/', (request, response) => {
+confessionsRouter.post('/', (request, response, next) => {
   if (!request.body.message) return response.status(400).json({'error': 'invalid entry'})
 
   const confession = new Confession({message} = request.body)
 
-  confession.save().then(savedConfession => {
-    response.json(savedConfession)
-  })
+  confession.save()
+  .then(savedConfession => response.json(savedConfession))
+  .catch(error => next(error))
 })
 
 confessionsRouter.put('/:id', (request, response, next) => {
