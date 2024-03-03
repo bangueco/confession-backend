@@ -6,9 +6,10 @@ confessionsRouter.get('/', (request, response) => {
   .then(msg => response.json(msg))
 })
 
-confessionsRouter.get('/:id', (request, response) => {
+confessionsRouter.get('/:id', (request, response, next) => {
   Confession.findById(request.params.id)
   .then(msg => response.json(msg))
+  .catch(error => next(error))
 })
 
 confessionsRouter.post('/', (request, response) => {
